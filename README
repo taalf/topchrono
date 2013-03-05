@@ -5,7 +5,7 @@ Commands:
 [s] Start/Pause
 [k] Keep time
 [r] Reset
-[f] Save times in file
+[f] Save times in a file
 [+]/[-] Decrease/Increase refresh time
 [h] Help
 [q] Quit
