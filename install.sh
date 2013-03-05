@@ -3,6 +3,8 @@
 
 cp ./topchrono /usr/bin/
 
+chmod +x /usr/bin/topchrono
+
 if [ -f /usr/bin/topchrono ]; then
   
   echo "Topchrono was well installed."
