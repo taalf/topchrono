@@ -1,0 +1,172 @@
+#!/bin/bash
+# topchrono 1.0.0
+
+#######################################################
+################## CUSTOM PARAMETERS ##################
+#######################################################
+
+refreshTime="0.02"
+
+keptDatesFile="keptTimes.tpc"
+
+#######################################################
+############# END OF CUSTOM PARAMETERS ################
+#######################################################
+
+stty -echo -icanon time 0 min 0
+
+run="false"
+
+key="r"
+
+i="1"
+
+while [ "1" ]; do
+  
+	printf "\033c"
+	
+	if [ "$run" == "true" ]; then
+		
+		now="$(($(date +%s%N)-timeInit))"
+		
+		centiseconds="$(($now/10000000%10))"
+		deciseconds="$(($now/100000000%10))"
+		seconds="$(($now/1000000000%10))"
+		decaseconds="$(($now/10000000000%6))"
+		minutes="$(($now/60000000000%10))"
+		decaminutes="$(($now/600000000000%6))"
+		hours="$(($now/3600000000000%10))"
+		decahours="$(($now/36000000000000))"
+		
+	fi
+	
+	date="$decahours$hours:$decaminutes$minutes:$decaseconds$seconds.$deciseconds$centiseconds"
+	
+	echo "$help"
+	echo ""
+	echo -e "   \033[1m$date\033[0m"
+	echo ""
+	echo -e "$keptDates"
+	
+	sleep $refreshTime
+	
+	if [ "$key" == "s" ]; then
+		
+		if [ "$run" == "false" ]; then
+			
+			if [ "$timePause" == "" ]; then
+				
+				timeInit="$(date +%s%N)"
+				
+			
+			else
+				
+				timeInit="$(($timeInit+$(date +%s%N)-$timePause))"
+				
+			fi
+			
+			run="true"
+			
+		
+		else
+			
+			timePause="$(date +%s%N)"
+			
+			run="false"
+			
+		fi
+	
+	elif [ "$key" == "q" ]; then
+		
+		printf "\033c"
+		
+		break
+		
+	
+	elif [ "$key" == "r" -a "$run" == "false" ]; then
+		
+		centiseconds="0"
+		deciseconds="0"
+		seconds="0"
+		decaseconds="0"
+		minutes="0"
+		decaminutes="0"
+		hours="0"
+		decahours="0"
+		
+		timePause=""
+		
+		previousTime=""
+		
+		keptDates=""
+		
+		i="1"
+		
+	
+	elif [ "$key" == "k" ]; then
+		
+		if [ "$previousTime" ]; then
+			
+			deltaTime="$(echo "$now - $previousTime" | bc)"
+			
+			deltaCentiseconds="$(($deltaTime/10000000%10))"
+			deltaDeciseconds="$(($deltaTime/100000000%10))"
+			deltaSeconds="$(($deltaTime/1000000000%10))"
+			deltaDecaseconds="$(($deltaTime/10000000000%6))"
+			deltaMinutes="$(($deltaTime/60000000000%10))"
+			deltaDecaminutes="$(($deltaTime/600000000000%6))"
+			deltaHours="$(($deltaTime/3600000000000%10))"
+			deltaDecahours="$(($deltaTime/36000000000000))"
+			
+			deltaDate="$deltaDecahours$deltaHours:$deltaDecaminutes$deltaMinutes:$deltaDecaseconds$deltaSeconds.$deltaDeciseconds$deltaCentiseconds"
+			
+		else
+			
+			deltaDate="$date"
+			
+		fi
+		
+		keptDates="${keptDates}$i\t$date\t$deltaDate\n"
+		
+		previousTime="$now"
+		
+		i="$((i+1))"
+		
+	
+	elif [ "$key" == "f" ]; then
+		
+		echo -e "$keptDates" > $keptDatesFile
+		
+	
+	elif [ "$key" == "h" ]; then
+		
+		if [ "$help" == "" ]; then
+			
+			help="[s] Start/Pause    [k] Keep time    [r] Reset    [f] Save times in file    [-]/[+] Decrease/Increase refresh time    [h] Help    [q] Quit"
+			
+		
+		else
+			
+			help=""
+			
+		fi
+		
+	
+	elif [ "$key" == "+" ]; then
+		
+		refreshTime="$(echo "$refreshTime + 0.01" | bc)"
+		
+	
+	elif [ "$key" == "-" ]; then
+		
+		refreshTime="$(echo "$refreshTime - 0.01" | bc)"
+		
+	fi
+	
+	read key
+	
+done
+
+stty sane
+
+exit 0
