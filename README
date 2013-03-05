@@ -6,6 +6,6 @@ Commands:
 [k] Keep time
 [r] Reset
 [f] Save times in file
-[-]/[+] Decrease/Increase refresh time
+[+]/[-] Decrease/Increase refresh time
 [h] Help
 [q] Quit
