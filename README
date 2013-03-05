@@ -1,0 +1,11 @@
+Topchrono is a simple stopwatch to run in a bash terminal.
+
+Commands:
+
+[s] Start/Pause
+[k] Keep time
+[r] Reset
+[f] Save times in file
+[-]/[+] Decrease/Increase refresh time
+[h] Help
+[q] Quit
