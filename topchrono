@@ -70,7 +70,7 @@ while [ "1" ]; do
 			
 		#-
 		
-		# If the stopwatch is running...
+		# But if the stopwatch is running...
 		else
 			
 			# Stop it.
@@ -87,7 +87,7 @@ while [ "1" ]; do
 	# If the [q] key is pressed when the stopwatch is stopped...
 	elif [ "$key" == "q" -a "$run" == "false" ]; then
 		
-		# Quit.
+		# Quit topchrono.
 		break
 		#-
 		
@@ -228,4 +228,6 @@ done
 stty sane
 #-
 
+# We did it! Phew...
 exit 0
+#-
