@@ -38,6 +38,15 @@ Keys:
 [h] Help
 [q] Quit
 
+Configuration:
+-------------
+
+- Inside the topchrono file can be customed two parameters:
+
+   * The default refresh time (refreshTime).
+   * The name of the files writen by topchrono (keptDateFile).
+
+Use a text editor to modify their value.
 
 Uninstallation:
 --------------
