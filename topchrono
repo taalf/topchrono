@@ -7,7 +7,7 @@
 
 refreshTime="0.02"
 
-keptDatesFile="keptTimes.tpc"
+keptDateFile="keptTimes.tpc"
 
 #######################################################
 ############# END OF CUSTOM PARAMETERS ################
@@ -141,7 +141,7 @@ while [ "1" ]; do
 	elif [ "$key" == "f" ]; then
 		
 		# Write the kept times in a file.
-		echo -e "$keptDates" > $keptDatesFile
+		echo -e "$keptDates" > $keptDateFile
 		#-
 		
 	#-
